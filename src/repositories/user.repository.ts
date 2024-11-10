@@ -32,6 +32,14 @@ export class UserRepository {
         })
     }
 
+    getUserBodyByEmail = async (userEmail: string): Promise<User | null> => {
+        return this.manager.findOne(User, {
+            where: {
+                email: userEmail,
+            },
+        });
+    };
+
     getUserByEmail = async (userEmail: string): Promise<boolean> => {
         const user = await this.manager.findOne(User, {
             where: {

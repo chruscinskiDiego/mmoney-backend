@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { AppDataSource } from "../database";
 import { User } from "../entities/user";
 import { UserRepository } from "../repositories/user.repository"
-
+import bcrypt from 'bcrypt';
 
 export class UserService {
 
@@ -19,7 +19,11 @@ export class UserService {
 
         try {
 
-            const user = new User(firstName, lastName, email, password, isActive);
+            const saltRounds = 10;
+
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            const user = new User(firstName, lastName, email, hashedPassword, isActive);
 
             return await this.userRepository.createUser(user);
 
@@ -51,8 +55,22 @@ export class UserService {
     }
 
     getAuthenticatedUser = async (email: string, password: string): Promise<User | null> => {
-        return this.userRepository.getUserByEmailAndPassword(email, password);
-    }
+
+        const user = await this.userRepository.getUserBodyByEmail(email);
+
+        if (!user || !user.password) {
+            return null;
+        }
+
+        //compara a senha com o hash no banco de dados
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return null;
+        }
+
+        return user; 
+    };
 
     getToken = async (email: string, password: string): Promise<string> => {
 
@@ -62,23 +80,27 @@ export class UserService {
             throw new Error('Dados inválidos!');
         }
 
+        if (!user.id) {
+            throw new Error('ID do usuário não está definido.');
+        }
+
         const tokenData = {
-            name: user?.firstName,
-            email: user?.email
+            name: user.firstName,
+            email: user.email
+        };
+
+        const tokenKey = process.env.JWT_SECRET as string;
+        if (!tokenKey) {
+            throw new Error('A chave JWT_SECRET não está configurada nas variáveis de ambiente.');
         }
 
-        const tokenKey: any = process.env.JWT_SECRET;
-
-        const tokenOptions = {
-            subject: user?.id?.toString()
-        }
+        const tokenOptions: jwt.SignOptions = {
+            subject: user.id.toString()
+        };
 
         const token = jwt.sign(tokenData, tokenKey, tokenOptions);
-
-
         return token;
-
-    }
+    };
 
     updateUser = async (userId: string, updatedData: Partial<User>): Promise<User | string> => {
         try {
