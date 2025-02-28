@@ -9,14 +9,25 @@ import categoryRouter from './routes/category.route';
 import expensesRouter from './routes/expenses.route';
 import { verifyAuth } from './middleware/auth';
 import cors from 'cors';
+import https from 'https';
+import fs from 'fs';
+import rateLimit from 'express-rate-limit';
 
 const server = express();
 const port = process.env.SERVER_PORT;
 
-server.use(express.json());
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 100, // 100 reqs por ip
+    message: 'Muitas requisições, tente novamente mais tarde.'
+});
 
+//limite de reqs
+server.use(limiter);
+
+server.use(express.json());
 server.use(cors({
-    origin: 'http://localhost:8080',
+    origin: 'https://localhost:8080',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization',],
 }));
@@ -26,10 +37,8 @@ server.use('/login', loginRouter);
 server.use('/users', userRouter);
 server.use('/categories', verifyAuth, categoryRouter);
 server.use('/banks', verifyAuth, bankRouter);
-server.use('/bank-accounts',  verifyAuth, bankAccountRouter);
+server.use('/bank-accounts', verifyAuth, bankAccountRouter);
 server.use('/expenses', verifyAuth, expensesRouter);
-
-
 
 AppDataSource.initialize()
     .then(async () => {
@@ -39,7 +48,12 @@ AppDataSource.initialize()
         console.error("Error during Data Source initialization", err)
     })
 
-server.listen(port, () => {
+/*server.listen(port, () => {
     console.log(`Servidor iniciado na porta ${port}!`);
-})
+})*/
+
+https.createServer({
+    cert: fs.readFileSync('src/ssl/code.crt'),
+    key: fs.readFileSync('src/ssl/code.key')
+}, server).listen(port, () => console.log('SERVIDOR HTTPS INICIADO'));
 
