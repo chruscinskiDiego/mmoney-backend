@@ -22,10 +22,16 @@ export class BankAccountService {
 
     }
 
-    createBankAccount = async (number: string, type: string, userId: string, bankId: string):Promise<BankAccount | null> => {
+    createBankAccount = async (number: string, type: string, userEmail: string, bankId: string):Promise<BankAccount | null> => {
 
         try {
             
+            
+            const userId = await this.userRepository.getUserIdByEmail(userEmail);
+            
+            if (!userId) {
+                throw new Error('Usuário não encontrado!');
+            }
             const user = await this.userRepository.getUserById(userId);
             const bank = await this.bankRepository.getBankById(bankId);
 
@@ -49,23 +55,26 @@ export class BankAccountService {
         }
     }
 
-    getBankAccountByUser = async(userId:string):Promise<BankAccount[] | null> => {
+    getBankAccountByUser = async(user: string): Promise<BankAccount[] | null> => {
+        
+        if (!user) {
+            throw new Error('O ID do usuário é inválido!');
+        }
+    
+        try {
+            const userId = await this.userRepository.getUserIdByEmail(user);
 
-        try{
-
-            const teste = await this.bankAccountRepository.getAccountByUser(userId);
-
-            console.log('teste: ' + JSON.stringify(teste));
+            if(!userId){
+                throw new Error('Usuário não encontrado!');
+            }
 
             return await this.bankAccountRepository.getAccountByUser(userId);
 
-        }
-        catch(error){
-
+        } catch (error) {
             throw new Error('Este usuário não tem vínculo com Contas Bancárias!');
-            
         }
     }
+    
 
     updateBankAccount = async(accountId: string, updatedData:Partial<BankAccount>):Promise<BankAccount | string> => {
 
@@ -82,6 +91,24 @@ export class BankAccountService {
         catch(error){
 
             throw new Error('Ocorreu um erro ao tentar atualizar a conta bancária!');
+        }
+    }
+
+    deleteBankAccount = async(accountId: string):Promise<boolean> => {
+
+        try{
+
+            const deleted = await this.bankAccountRepository.deleteAccount(accountId);
+
+            if(!deleted){
+                throw new Error('Conta não encontrada!');
+            }
+
+            return deleted;
+        }
+        catch(error){
+
+            throw new Error('Ocorreu um erro ao tentar deletar a conta bancária!');
         }
     }
 }

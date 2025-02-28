@@ -13,6 +13,9 @@ export class Expenses {
     value?: number;
 
     @Column({type: 'text'})
+    situation: string;
+
+    @Column({type: 'text'})
     obs?:string;
 
     @Column({type: 'date'})
@@ -30,8 +33,9 @@ export class Expenses {
     @JoinColumn()
     fk_bank_account?:BankAccount;
 
-    constructor(value:number, obs:string, date:Date, user:User, category:Category, bankAccount:BankAccount){
+    constructor(value:number, situation:string, obs:string, date:Date, user:User, category:Category, bankAccount:BankAccount){
         this.value = value;
+        this.situation = situation,
         this.obs = obs;
         this.date = date;
         this.fk_user = user;

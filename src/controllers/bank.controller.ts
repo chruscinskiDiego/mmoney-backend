@@ -21,7 +21,7 @@ export class BankController {
                 return res.status(400).json({message:'Este banco já foi cadastrado!'});
             }
 
-            await this.bankService.createBank(bank.name, bank.code);
+            await this.bankService.createBank(bank.name, bank.code, bank.user);
             
             return res.status(200).json({ message: 'Banco criado com sucesso!' });
 
@@ -35,6 +35,28 @@ export class BankController {
         try {
 
             const banks = await this.bankService.getBanks();
+
+            return res.status(200).json(banks);
+
+        }
+        catch (error) {
+            return res.status(400).json({ message: 'Não foi possível buscar os bancos!' });
+        }
+    }
+
+    getBanksByUser = async (req: Request, res: any) => {
+        
+        const { user } = req.params;
+
+        if (!user) {
+
+            return res.status(400).json({ message: "Informe o campo usuário" });
+
+        }
+
+        try {
+
+            const banks = await this.bankService.getBanksByUser(user);
 
             return res.status(200).json(banks);
 

@@ -10,10 +10,10 @@ export class BankService {
         this.bankRepository = bankRepository;
     }
 
-    createBank = async (name: string, code: string): Promise<Bank | null> => {
+    createBank = async (name: string, code: string, user:string): Promise<Bank | null> => {
 
         try {
-            const bank = new Bank(name, code);
+            const bank = new Bank(name, code, user);
 
             return this.bankRepository.createBank(bank);
         }
@@ -35,6 +35,17 @@ export class BankService {
 
     }
 
+    getBanksByUser = async (user: string): Promise<Bank[]> => {
+        
+        try {
+            return this.bankRepository.getBanksByUser(user);
+        }
+        catch (error) {
+            throw new Error('Não foi possível buscar os bancos!');
+        }
+
+    }
+    
     getBankById = async (bankId: string): Promise<Bank | null> => {
 
         try {

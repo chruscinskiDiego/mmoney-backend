@@ -47,4 +47,18 @@ export class BankAccountRepository {
         return this.manager.save(account);
 
     }
+
+    deleteAccount = async (accountId: string): Promise<boolean> => {
+
+        const account = await this.getAccountById(accountId);
+
+        if (!account) {
+            return false;
+        }
+
+        await this.manager.remove(account);
+
+        return true;
+    }
+
 }

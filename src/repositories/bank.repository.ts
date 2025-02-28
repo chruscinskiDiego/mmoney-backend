@@ -28,6 +28,25 @@ export class BankRepository{
         })
     }
 
+    getBanksByUser = async(user:string) : Promise<Bank[]> => {
+
+        const banks = await this.manager.find(Bank, {
+            where: {
+                user: user,
+            },
+        });
+
+        const banksDTO = banks.map((bank) => ({
+            id: bank.id,
+            name: bank.name,
+            code: bank.code
+        }));
+
+        return banksDTO;
+
+
+    }
+
     getBankByName = async(bankName:string):Promise<boolean> => {
 
         const bank = await this.manager.findOne(Bank, {

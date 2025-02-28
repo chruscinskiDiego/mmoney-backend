@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const expensesSchema = z.object({
     value: z.number(),
+    situation: z.string(),
     obs: z.string().optional(),
     date: z.preprocess((arg) => {
         if (typeof arg === "string" || arg instanceof Date) {
@@ -9,7 +10,7 @@ export const expensesSchema = z.object({
         }
         return arg;
     }, z.date()),
-    userId: z.string(),
+    userEmail: z.string(),
     categoryId: z.string(),
     bankAccountId: z.string(),
 })

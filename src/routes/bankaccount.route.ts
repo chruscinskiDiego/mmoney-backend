@@ -7,8 +7,9 @@ const bankAccountRouter = Router();
 const bankAccountController = new BankAccountController();
 
 bankAccountRouter.post('/create', bankAccountController.createBankAccount);
-bankAccountRouter.get('/user/:id', bankAccountController.getBankAccountByUser);
+bankAccountRouter.get('/user/:user', bankAccountController.getBankAccountByUser);
 bankAccountRouter.put('/update/:id', bankAccountController.updateBankAccount);
+bankAccountRouter.delete('/delete/:id', bankAccountController.deleteBankAccount);
 
 export default bankAccountRouter;
 

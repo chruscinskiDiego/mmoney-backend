@@ -1,3 +1,4 @@
+import { string } from "zod";
 import { AppDataSource } from "../database";
 import { Category } from "../entities/category";
 import { CategoryRepository } from "../repositories/category.repository";
@@ -11,12 +12,14 @@ export class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    createCategory = async (name: string): Promise<Category | null> => {
+    createCategory = async (name: string, user:string): Promise<Category | null> => {
 
         try {
-            const category = new Category(name);
+
+            const category = new Category(name, user);
 
             return this.categoryRepository.createCategory(category);
+
         }
         catch (error) {
             throw new Error('Não foi possível criar a categoria!');
@@ -36,11 +39,11 @@ export class CategoryService {
 
     }
 
-    getCategoryByName = async(categoryName:string):Promise<boolean> =>{
+    getCategoryByUser = async(categoryName:string):Promise<Category[]> =>{
 
         try{
 
-            return this.categoryRepository.getCategoryByName(categoryName);
+            return this.categoryRepository.getCategoriesByUser(categoryName);
 
         }
         catch(error){
@@ -72,6 +75,15 @@ export class CategoryService {
         }
         catch(error){
             throw new Error('Ocorreu um erro ao tentar atualizar a categoria!');
+        }
+    }
+
+    deleteCategory = async(categoryId:string):Promise<Category | null> => {
+        try {
+            return await this.categoryRepository.deleteCategory(categoryId);
+        }
+        catch(error){
+            throw new Error ('Ocorreu um erro ao tentar remover a categoria!');
         }
     }
 }

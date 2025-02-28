@@ -8,18 +8,27 @@ import bankRouter from './routes/bank.route';
 import categoryRouter from './routes/category.route';
 import expensesRouter from './routes/expenses.route';
 import { verifyAuth } from './middleware/auth';
+import cors from 'cors';
 
 const server = express();
 const port = process.env.SERVER_PORT;
 
 server.use(express.json());
 
+server.use(cors({
+    origin: 'http://localhost:8080',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization',],
+}));
+
+//inserir verifyAuth
+server.use('/login', loginRouter);
 server.use('/users', userRouter);
 server.use('/categories', verifyAuth, categoryRouter);
 server.use('/banks', verifyAuth, bankRouter);
-server.use('/bank-accounts', verifyAuth, bankAccountRouter);
-server.use('/login', loginRouter);
+server.use('/bank-accounts',  verifyAuth, bankAccountRouter);
 server.use('/expenses', verifyAuth, expensesRouter);
+
 
 
 AppDataSource.initialize()
@@ -33,3 +42,4 @@ AppDataSource.initialize()
 server.listen(port, () => {
     console.log(`Servidor iniciado na porta ${port}!`);
 })
+

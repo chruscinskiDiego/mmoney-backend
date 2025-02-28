@@ -16,7 +16,7 @@ export class BankAccountController {
             
             const bankAccount = bankAccountSchema.parse(req.body);
 
-            await this.bankAccountService.createBankAccount(bankAccount.number, bankAccount.type, bankAccount.userId, bankAccount.bankId);
+            await this.bankAccountService.createBankAccount(bankAccount.number, bankAccount.type, bankAccount.userEmail, bankAccount.bankId);
 
             return res.status(200).json({message: 'Conta criada com sucesso!'});
 
@@ -30,9 +30,9 @@ export class BankAccountController {
 
     getBankAccountByUser = async(req:Request, res:any) => {
 
-        const {id} = req.params;
+        const {user} = req.params;
 
-        if(!id){
+        if(!user){
 
             return res.status(400).json({message: "Informe o campo ID do Usuário!"});
 
@@ -40,7 +40,7 @@ export class BankAccountController {
 
         try{
 
-            const bankAccount = await this.bankAccountService.getBankAccountByUser(id);
+            const bankAccount = await this.bankAccountService.getBankAccountByUser(user);
 
             return res.status(200).json(bankAccount);
 
@@ -84,6 +84,37 @@ export class BankAccountController {
         catch(error){
 
             return res.status(400).json({message: 'Não foi possível atualizar a Conta Bancária!'});
+
+        }
+
+    }
+
+    deleteBankAccount = async(req:Request, res:any) => {
+
+        const {id} = req.params;
+
+        if(!id){
+
+            return res.status(400).json({message: "Informe o campo ID"});
+
+        }
+
+        try{
+
+            const deleted = await this.bankAccountService.deleteBankAccount(id);
+
+            if(!deleted){
+
+                return res.status(400).json({message: 'Conta bancária não encontrada!'});
+
+            }
+
+            return res.status(200).json({message: 'Conta bancária deletada com sucesso!'});
+
+        }
+        catch(error){
+
+            return res.status(400).json({message: 'Não foi possível deletar a Conta Bancária!'});
 
         }
 

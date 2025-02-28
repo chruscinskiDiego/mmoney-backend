@@ -8,6 +8,7 @@ const bankController = new BankController();
 bankRouter.post('/create', bankController.createBank);
 bankRouter.get('/:id', bankController.getBankById);
 bankRouter.get('/', bankController.getBanks);
+bankRouter.get('/user/:user', bankController.getBanksByUser);
 bankRouter.put('/update/:id', bankController.udpdateBank);
 bankRouter.delete('/delete/:id', bankController.deleteBank);
 

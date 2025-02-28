@@ -25,6 +25,22 @@ export class CategoryRepository {
         })
     }
 
+    getCategoriesByUser = async (user: string): Promise<Category[]> => {
+        const categories = await this.manager.find(Category, {
+            where: {
+                user: user,
+            },
+        });
+    
+        const categoriesDTO = categories.map((category) => ({
+            id: category.id,
+            name: category.name,
+        }));
+        
+        return categoriesDTO;
+    };
+    
+
     getCategoryByName = async(categoryName:string):Promise<boolean> => {
         
         const category = await this.manager.findOne(Category, {
@@ -49,4 +65,16 @@ export class CategoryRepository {
         return this.manager.save(category);
         
     }    
+
+    deleteCategory = async(categoryId:string)=> {
+
+        const category = await this.getCategoryById(categoryId);
+
+        if(!category){
+            return null;
+        }
+
+        return this.manager.remove(category);
+
+    }
 }

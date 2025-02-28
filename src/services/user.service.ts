@@ -72,35 +72,43 @@ export class UserService {
         return user; 
     };
 
-    getToken = async (email: string, password: string): Promise<string> => {
-
+    getToken = async (email: string, password: string): Promise<{ token: string; user: User | null }> => {
         const user = await this.getAuthenticatedUser(email, password);
-
+    
         if (!user) {
             throw new Error('Dados inválidos!');
         }
-
+    
         if (!user.id) {
             throw new Error('ID do usuário não está definido.');
         }
-
+    
         const tokenData = {
             name: user.firstName,
             email: user.email
         };
-
+    
         const tokenKey = process.env.JWT_SECRET as string;
         if (!tokenKey) {
             throw new Error('A chave JWT_SECRET não está configurada nas variáveis de ambiente.');
         }
-
+    
         const tokenOptions: jwt.SignOptions = {
             subject: user.id.toString()
         };
-
+    
         const token = jwt.sign(tokenData, tokenKey, tokenOptions);
-        return token;
+    
+        const userData = await this.userRepository.getUserBodyByEmail(email);
+    
+        const tokenDTO = {
+            token: token,
+            user: userData,
+        };
+    
+        return tokenDTO;
     };
+    
 
     updateUser = async (userId: string, updatedData: Partial<User>): Promise<User | string> => {
         try {

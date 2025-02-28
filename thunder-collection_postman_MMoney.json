@@ -1,0 +1,580 @@
+{
+    "info": {
+        "_postman_id": "7cc2e0c2-004a-4153-80ca-7095a99f185a",
+        "name": "MMoney",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "USERS",
+            "item": [
+                {
+                    "name": "GET USER BY ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/users/getUserById/1",
+                            "path": [
+                                "users",
+                                "getUserById",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRGllZ28iLCJlbWFpbCI6ImNvbnRhdG9AZGllZ29jaHJ1c2NpbnNraS5jb20uYnIiLCJpYXQiOjE3MzAwNzE2MzEsInN1YiI6IjEifQ.Ld7VaeTxS6UzhhmrnLetZO-g0KxJ5eI7xU1ZQagEJLk",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "POST USER",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:3000/users/create",
+                            "path": [
+                                "users",
+                                "create"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"firstName\": \"Gustavo Moretto\",\n  \"lastName\": \"Dalla Costa\",\n  \"email\": \"gustavo@gmail.com\",\n  \"password\": \"diegotchola123@\",\n  \"isActive\": true\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "GET USERS",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/users/1",
+                            "path": [
+                                "users",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"firstName\": \"Diego\",\n  \"lastName\": \"Chruscinskssi\",\n  \"email\": \"diego@gmail\",\n  \"password\": \"123\",\n  \"isActive\": true\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWlsZW5hIiwiZW1haWwiOiJjb250YXRvQGRpZWdvY2hydXNjaW5za2kuY29tLmJyIiwiaWF0IjoxNzMwNjY1MTE5LCJzdWIiOiIyIn0._hq8_tC487MVnD6Hlsmghcn2bkKQB5IuATZmjoczD-w",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "PUT USER",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://localhost:3000/users/update/1",
+                            "path": [
+                                "users",
+                                "update",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"firstName\": \"Diego\",\n  \"lastName\": \"Chruscinski de Souza\",\n  \"email\": \"contato@diegochruscinski@gmail.com\",\n  \"password\": \"teste@123\",\n  \"isActive\": false\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "LOGIN",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:3000/login/auth",
+                            "path": [
+                                "login",
+                                "auth"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"gustavo@gmail.com\",\n  \"password\": \"$2b$10$iKMRIG1rTBX4In7q1xP8bee2hYNDE/qT3Fk83STjrUGvgiW6q6MDC\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRGllZ28iLCJlbWFpbCI6ImNvbnRhdG9AZGllZ29jaHJ1c2NpbnNraS5jb20uYnIiLCJpYXQiOjE3MzAyNDcyMDksInN1YiI6IjEifQ.tYeqKJ3Q14OeG1rKTp7m-13LqZWKnZ62V9G2mwGXi5I",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "BANKS",
+            "item": [
+                {
+                    "name": "GET BANKS",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/banks/",
+                            "path": [
+                                "banks"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWlsZW5hIiwiZW1haWwiOiJjb250YXRvQGRpZWdvY2hydXNjaW5za2kuY29tLmJyIiwiaWF0IjoxNzMwMzAxNDQ3LCJzdWIiOiIyIn0.NlJBbRQAaFxK97F2DOLpO-z2brau_jKxuO2yFhPDnFg",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "POST BANK",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:3000/banks/create",
+                            "path": [
+                                "banks",
+                                "create"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\":\"Banco do Brasil\",\n  \"code\":\"001\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWlsZW5hIiwiZW1haWwiOiJjb250YXRvQGRpZWdvY2hydXNjaW5za2kuY29tLmJyIiwiaWF0IjoxNzMwMzAxNDQ3LCJzdWIiOiIyIn0.NlJBbRQAaFxK97F2DOLpO-z2brau_jKxuO2yFhPDnFg",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "PUT BANK",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://localhost:3000/banks/update/1",
+                            "path": [
+                                "banks",
+                                "update",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\":\"Caaaixa\",\n  \"code\":\"002\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWlsZW5hIiwiZW1haWwiOiJjb250YXRvQGRpZWdvY2hydXNjaW5za2kuY29tLmJyIiwiaWF0IjoxNzMwMzAxNDQ3LCJzdWIiOiIyIn0.NlJBbRQAaFxK97F2DOLpO-z2brau_jKxuO2yFhPDnFg",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "DELETE BANK",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "http://localhost:3000/banks/delete/5",
+                            "path": [
+                                "banks",
+                                "delete",
+                                "5"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWlsZW5hIiwiZW1haWwiOiJjb250YXRvQGRpZWdvY2hydXNjaW5za2kuY29tLmJyIiwiaWF0IjoxNzMwMzAxNDQ3LCJzdWIiOiIyIn0.NlJBbRQAaFxK97F2DOLpO-z2brau_jKxuO2yFhPDnFg",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "BANK ACCOUNTS",
+            "item": [
+                {
+                    "name": "POST BANK ACCOUNTS",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:3000/bank-accounts/create",
+                            "path": [
+                                "bank-accounts",
+                                "create"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"number\": \"40028922\",\n  \"type\": \"Poupanca\",\n  \"userId\": \"1\",\n  \"bankId\": \"1\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "PUT BANK ACCOUNT",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://localhost:3000/bank-accounts/update/9",
+                            "path": [
+                                "bank-accounts",
+                                "update",
+                                "9"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"number\": \"4002892122\",\n  \"type\": \"Esquisitinaaaa\",\n  \"userId\": \"1\",\n  \"bankId\": \"1\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "GET BANK ACCOUNT BY USER",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/bank-accounts/user/1",
+                            "path": [
+                                "bank-accounts",
+                                "user",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "CATEGORIES",
+            "item": [
+                {
+                    "name": "POST CATEGORY",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:3000/categories/create",
+                            "path": [
+                                "categories",
+                                "create"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\":\"Bolsa de Valores\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "GET CATEGORY BY ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/categories/1",
+                            "path": [
+                                "categories",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        }
+                    }
+                },
+                {
+                    "name": "GET CATEGORIES",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/categories",
+                            "path": [
+                                "categories"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        }
+                    }
+                },
+                {
+                    "name": "PUT CATEGORY",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://localhost:3000/categories/update/1",
+                            "path": [
+                                "categories",
+                                "update",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\":\"PUTin TESTE\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "EXPENSES",
+            "item": [
+                {
+                    "name": "POST EXPENSE",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "http://localhost:3000/expenses/create",
+                            "path": [
+                                "expenses",
+                                "create"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"value\": 12.05,\n  \"obs\": \"teste\",\n  \"date\": \"2024-10-28T00:00:00.000Z\", \n  \"userId\": \"1\",\n  \"categoryId\": \"1\",\n  \"bankAccountId\": \"1\"\n}\n"
+                        }
+                    }
+                },
+                {
+                    "name": "GET EXPENSE BY ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/expenses/1",
+                            "path": [
+                                "expenses",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        }
+                    }
+                },
+                {
+                    "name": "PUT EXPENSE",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://localhost:3000/expenses/update/1",
+                            "path": [
+                                "expenses",
+                                "update",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"categoryId\": \"2\",\n  \"bankAccountId\": \"2\"\n}\n"
+                        }
+                    }
+                },
+                {
+                    "name": "GET EXPENSE BY USER",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:3000/expenses/user/1",
+                            "path": [
+                                "expenses",
+                                "user",
+                                "1"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -15,13 +15,13 @@ export class CategoryController {
 
             const category = categorySchema.parse(req.body);
 
-            const alreadyRegistered = await this.categoryService.getCategoryByName(category.name);
+           // const alreadyRegistered = await this.categoryService.getCategoryByUser(category.name);
 
-            if(alreadyRegistered){
+           /* if(alreadyRegistered){
                 return res.status(400).json({message:'Categoria já cadastrada no sistema!'});
-            }
+            }*/
 
-            await this.categoryService.createCategory(category.name);
+            await this.categoryService.createCategory(category.name, category.user);
             
             return res.status(200).json({ message: 'Categoria criada com sucesso!' });
 
@@ -46,7 +46,7 @@ export class CategoryController {
         }
     }
 
-    getCategoryByid = async (req: Request, res: any) => {
+    getCategoryById = async (req: Request, res: any) => {
 
         const { id } = req.params
 
@@ -59,6 +59,28 @@ export class CategoryController {
         try {
 
             const category = await this.categoryService.getCategoryById(id);
+
+            return res.status(200).json(category);
+        }
+        catch {
+
+            return res.status(400).json({ message: "Categoria não encontrada!" });
+        }
+    }
+
+    getCategoriesByUser = async (req: Request, res: any) => {
+
+        const { user } = req.params
+
+        if (!user) {
+
+            return res.status(400).json({ message: "Usário não informado!" });
+
+        }
+
+        try {
+
+            const category = await this.categoryService.getCategoryByUser(user);
 
             return res.status(200).json(category);
         }
@@ -92,6 +114,19 @@ export class CategoryController {
             return res.status(400).json({message: 'Não foi possível atualizar a Categoria!'});
         }
 
+    }
+
+    deleteCategory = async(req:Request, res: any) => {
+        const {id} = req.params;
+
+        try{
+            await this.categoryService.deleteCategory(id);
+
+            return res.status(200).json({message: 'Categoria removida com sucesso!'});
+
+        }catch(error){
+            return res.status(400).json({message: 'Não foi possível deletar a categoria!'});
+        }
     }
 
 }

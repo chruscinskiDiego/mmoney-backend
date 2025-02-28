@@ -14,6 +14,21 @@ export class UserRepository {
         return this.manager.save(user);
     }
 
+    getUserIdByEmail = async(userEmail: string): Promise<string | null | undefined> => {
+
+        const user = await this.manager.findOne(User, {
+            where: {
+                email: userEmail,
+            },
+        });
+        if (!user) {
+            return null;
+        }
+        
+        return user.id;
+
+    }
+
     getUserById = async(userId: string): Promise<User | null> =>{
         return this.manager.findOne(User, {
             where:{

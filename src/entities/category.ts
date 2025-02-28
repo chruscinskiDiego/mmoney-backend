@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+
 @Entity()
 export class Category {
-
 
     @PrimaryGeneratedColumn()
     id?:string;
@@ -10,7 +10,11 @@ export class Category {
     @Column({type: 'text'})
     name?:string;
 
-    constructor(name:string){
+    @Column({type: 'text'})
+    user?:string;
+
+    constructor(name:string, user: string){
         this.name = name;
+        this.user= user;
     }
 }

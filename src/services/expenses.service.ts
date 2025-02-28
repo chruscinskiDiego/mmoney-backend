@@ -27,10 +27,16 @@ export class ExpensesService {
         this.bankAccountRepository = bankAccountRepository;
     }
 
-    createExpense = async (value: number, obs: string, date: Date, userId: string, categoryId: string, bankAccountId: string): Promise<Expenses> => {
+    createExpense = async (value: number, situation: string, obs: string, date: Date, userEmail: string, categoryId: string, bankAccountId: string): Promise<Expenses> => {
 
         try {
 
+            const userId = await this.userRepository.getUserIdByEmail(userEmail);
+
+            if(!userId){
+                throw new Error('Usuário não encontrado.');
+            }
+            
             const user = await this.userRepository.getUserById(userId);
             const category = await this.categoryRepository.getCategoryById(categoryId);
             const bankAccount = await this.bankAccountRepository.getAccountById(bankAccountId);
@@ -46,7 +52,7 @@ export class ExpensesService {
                 throw new Error('Banco não registrado no sistema!');
             }
 
-            const expense = new Expenses(value, obs, date, user, category, bankAccount);
+            const expense = new Expenses(value, situation, obs, date, user, category, bankAccount);
 
             return await this.expensesRepository.createExpense(expense);
 
@@ -73,6 +79,7 @@ export class ExpensesService {
 
             const expenseDTO = {
                 id: expense.id,
+                situation: expense.situation,
                 value: expense.value,
                 obs: expense.obs,
                 date: expense.date,
@@ -88,9 +95,16 @@ export class ExpensesService {
 
     }
 
-    getExpenseByUser = async (expenseUser: string): Promise<Expenses[] | null> => {
+    getExpenseByUser = async (userEmail: string): Promise<Expenses[] | null> => {
         try {
-            const expenses = await this.expensesRepository.getExpensesByUser(expenseUser);
+
+            const userId = await this.userRepository.getUserIdByEmail(userEmail);
+
+            if (!userId) {
+                throw new Error('Usuário não encontrado.');
+            }
+
+            const expenses = await this.expensesRepository.getExpensesByUser(userId);
     
             if (!expenses || expenses.length === 0) {
                 return null;
@@ -98,6 +112,7 @@ export class ExpensesService {
             
             const expensesDTO = expenses.map(expense => ({
                 id: expense.id,
+                situation: expense.situation,
                 value: expense.value,
                 obs: expense.obs,
                 date: expense.date,
@@ -107,6 +122,42 @@ export class ExpensesService {
     
             return expensesDTO;
         } catch (error) {
+            throw new Error('Não foi possível buscar as Despesas');
+        }
+    }
+
+    getExpensesCategoriesResumeByUser = async (userEmail: string): Promise<any[]> => {
+
+        try {
+
+            const userId = await this.userRepository.getUserIdByEmail(userEmail);
+
+
+            if (!userId) {
+                throw new Error('Usuário não encontrado.');
+            }
+
+            return await this.expensesRepository.getExpensesCategoriesResumeByUser(parseInt(userId));
+
+        } catch (error) {
+            throw new Error('Não foi possível buscar as Despesas');
+        }
+    }
+
+    getExpensesResumeInYearByUser = async (userEmail:string): Promise<any[]> => {
+
+        try {
+
+            const userId = await this.userRepository.getUserIdByEmail(userEmail);
+
+            if (!userId) {
+                throw new Error('Usuário não encontrado.');
+            }
+
+            return await this.expensesRepository.getExpensesResumeInYearByUser(parseInt(userId));
+
+        }
+        catch (error) {
             throw new Error('Não foi possível buscar as Despesas');
         }
     }
@@ -125,6 +176,7 @@ export class ExpensesService {
             const expenseDTO = {
                 id: updatedExpense.id,
                 value: updatedExpense.value,
+                situation: updatedExpense.situation,
                 obs: updatedExpense.obs,
                 date: updatedExpense.date,
                 category: updatedExpense.fk_category,
@@ -134,6 +186,18 @@ export class ExpensesService {
             return expenseDTO;
         } catch (error) {
             throw new Error('Ocorreu um erro ao tentar atualizar a despesa.');
+        }
+
+    }
+
+    deleteExpense = async (expenseId: string): Promise<Expenses | null> => {
+        
+        try {
+
+            return await this.expensesRepository.deleteExpense(expenseId);
+
+        } catch (error) {
+            throw new Error('Ocorreu um erro ao tentar deletar a despesa.');
         }
 
     }
