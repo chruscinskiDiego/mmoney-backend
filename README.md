@@ -1,19 +1,19 @@
 # MMoney Backend
 
-API de finanças pessoais construída com Node.js, TypeScript e Express, com persistência em SQLite por meio do TypeORM.
+Personal finance API built with Node.js, TypeScript and Express, using SQLite persistence through TypeORM.
 
-## Funcionalidades
+## Features
 
-- Cadastro de usuários e autenticação.
-- Gerenciamento de bancos, contas, categorias e despesas.
-- Consultas de despesas e resumos por usuário.
-- Validação de entradas com Zod, autenticação por token e limitação de requisições.
+- User registration and authentication.
+- Bank, account, category and expense management.
+- Expense queries and per-user summaries.
+- Zod input validation, token authentication and rate limiting.
 
-## Tecnologias
+## Technologies
 
-Node.js, TypeScript, Express, TypeORM, SQLite, bcrypt e JWT.
+Node.js, TypeScript, Express, TypeORM, SQLite, bcrypt and JWT.
 
-## Executar localmente
+## Run locally
 
 ```bash
 git clone https://github.com/chruscinskiDiego/mmoney-backend.git
@@ -21,33 +21,33 @@ cd mmoney-backend
 npm ci
 ```
 
-Antes de iniciar:
+Before starting:
 
-1. Configure SERVER_PORT no arquivo .env.
-2. Confira outras configurações usadas pela autenticação em src/middleware e src/controllers/login.controller.ts.
-3. Configure certificados próprios de desenvolvimento: src/server.ts lê src/ssl/code.crt e src/ssl/code.key para iniciar HTTPS.
-4. Alinhe o CORS com a URL do frontend; a origem atual é https://localhost:8080.
+1. Set SERVER_PORT in .env.
+2. Review authentication settings in src/middleware and src/controllers/login.controller.ts.
+3. Configure your own development certificates: src/server.ts reads src/ssl/code.crt and src/ssl/code.key to start HTTPS.
+4. Align CORS with the frontend URL; the current allowed origin is https://localhost:8080.
 
 ```bash
 npm run dev
 ```
 
-## Persistência
+## Persistence
 
-[src/database/index.ts](src/database/index.ts) configura um banco SQLite em src/database/db.sqlite. A configuração atual não utiliza PostgreSQL. O modo synchronize está habilitado para desenvolvimento e deve ser revisado antes de qualquer implantação.
+[src/database/index.ts](src/database/index.ts) configures SQLite at src/database/db.sqlite. The current configuration does not use PostgreSQL. Synchronization is enabled for development and needs review before deployment.
 
-## Organização
+## Structure
 
-- `routes/` e `controllers/`: interface HTTP.
-- `services/`: operações da aplicação.
-- `repositories/`, `entities/` e `database/`: acesso a dados.
-- `schemas/`: validação de entradas.
-- `middleware/`: autenticação.
+- `routes/` and `controllers/`: HTTP interface.
+- `services/`: application operations.
+- `repositories/`, `entities/` and `database/`: data access.
+- `schemas/`: input validation.
+- `middleware/`: authentication.
 
-## Cliente web
+## Web client
 
 [MMoney Frontend](https://github.com/chruscinskiDiego/mmoney-frontend).
 
-## Escopo e validação
+## Scope and validation
 
-Projeto pessoal de estudo. O repositório contém material de TLS e um arquivo de banco versionados: substitua-os por recursos locais antes de usar com dados reais. O script npm test ainda é um placeholder; a aplicação não foi executada nesta revisão.
+Personal study project. TLS material and a database file are versioned in the repository; replace them with local resources before using real data. The npm test script is still a placeholder.
