@@ -1,49 +1,53 @@
-# MMoney Backend 💸
+# MMoney Backend
 
-[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white)](https://nodejs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)](https://expressjs.com)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org)
-[![TypeORM](https://img.shields.io/badge/TypeORM-FE0803?style=flat&logo=typeorm&logoColor=white)](https://typeorm.io)
+API de finanças pessoais construída com Node.js, TypeScript e Express, com persistência em SQLite por meio do TypeORM.
 
----
+## Funcionalidades
 
-## 📖 About
+- Cadastro de usuários e autenticação.
+- Gerenciamento de bancos, contas, categorias e despesas.
+- Consultas de despesas e resumos por usuário.
+- Validação de entradas com Zod, autenticação por token e limitação de requisições.
 
-**MMoney Backend** is a REST API built with [Node.js](https://nodejs.org) and [TypeScript](https://www.typescriptlang.org) to support a personal finance application.  
-Its main goal is to provide a reliable backend layer for **financial data organization** and **business rules**, exposing endpoints that can be consumed by a web/mobile client.
+## Tecnologias
 
----
+Node.js, TypeScript, Express, TypeORM, SQLite, bcrypt e JWT.
 
-## Overview
+## Executar localmente
 
-This project centralizes the backend responsibilities of a finance app:
+```bash
+git clone https://github.com/chruscinskiDiego/mmoney-backend.git
+cd mmoney-backend
+npm ci
+```
 
-- **REST endpoints** for finance-related resources
-- **Business rules** and data consistency
-- **Relational persistence** with [PostgreSQL](https://www.postgresql.org)
-- **ORM-based data access** with [TypeORM](https://typeorm.io)
-- HTTP server powered by [Express](https://expressjs.com)
+Antes de iniciar:
 
----
+1. Configure SERVER_PORT no arquivo .env.
+2. Confira outras configurações usadas pela autenticação em src/middleware e src/controllers/login.controller.ts.
+3. Configure certificados próprios de desenvolvimento: src/server.ts lê src/ssl/code.crt e src/ssl/code.key para iniciar HTTPS.
+4. Alinhe o CORS com a URL do frontend; a origem atual é https://localhost:8080.
 
-## ✨ Tech stack
+```bash
+npm run dev
+```
 
-- **Runtime:** [Node.js](https://nodejs.org)
-- **Language:** [TypeScript](https://www.typescriptlang.org)
-- **Framework:** [Express](https://expressjs.com)
-- **Database:** [PostgreSQL](https://www.postgresql.org)
-- **ORM:** [TypeORM](https://typeorm.io)
+## Persistência
 
----
+[src/database/index.ts](src/database/index.ts) configura um banco SQLite em src/database/db.sqlite. A configuração atual não utiliza PostgreSQL. O modo synchronize está habilitado para desenvolvimento e deve ser revisado antes de qualquer implantação.
 
-## 🚀 Key features
+## Organização
 
-- Finance resources management (CRUD + business rules)
-  - Transactions (income/expense)
-  - Organization by categories
-- Structured API layer with clear separation between routes, services and persistence
+- `routes/` e `controllers/`: interface HTTP.
+- `services/`: operações da aplicação.
+- `repositories/`, `entities/` e `database/`: acesso a dados.
+- `schemas/`: validação de entradas.
+- `middleware/`: autenticação.
 
----
+## Cliente web
 
-_Developed by Diego Chruscinski._
+[MMoney Frontend](https://github.com/chruscinskiDiego/mmoney-frontend).
+
+## Escopo e validação
+
+Projeto pessoal de estudo. O repositório contém material de TLS e um arquivo de banco versionados: substitua-os por recursos locais antes de usar com dados reais. O script npm test ainda é um placeholder; a aplicação não foi executada nesta revisão.
